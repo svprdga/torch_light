@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:torch_light/torch_light.dart';
 
 void main() {
@@ -11,10 +12,18 @@ class TorchApp extends StatefulWidget {
 }
 
 class _TorchAppState extends State<TorchApp> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: [Locale('en', '')],
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       home: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: const Text('torch_light example app'),
         ),
@@ -24,8 +33,8 @@ class _TorchAppState extends State<TorchApp> {
                 child: Center(
               child: RaisedButton(
                 child: Text('Enable torch'),
-                onPressed: () {
-                  TorchLight.enableTorch();
+                onPressed: () async {
+                  _enableTorch(context);
                 },
               ),
             )),
@@ -34,7 +43,7 @@ class _TorchAppState extends State<TorchApp> {
               child: RaisedButton(
                 child: Text('Disable torch'),
                 onPressed: () {
-                  TorchLight.disableTorch();
+                  _disableTorch(context);
                 },
               ),
             )),
@@ -42,5 +51,27 @@ class _TorchAppState extends State<TorchApp> {
         ),
       ),
     );
+  }
+
+  _enableTorch(BuildContext context) async {
+    try {
+      await TorchLight.enableTorch();
+    } on EnableTorchException catch (e) {
+      _showMessage(e.message);
+    }
+  }
+
+  _disableTorch(BuildContext context) async {
+    try {
+      await TorchLight.disableTorch();
+    } on DisableTorchException catch (e) {
+      _showMessage(e.message);
+    }
+  }
+
+  _showMessage(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(message),
+    ));
   }
 }
