@@ -59,7 +59,7 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
     private func disableTorch(result: FlutterResult) {
         guard let device = AVCaptureDevice.default(for: .video) else {
             result(FlutterError(code: self.errorEnableTorch, message: "Could not disable torch, please make sure that you are doing this on a real device", details: nil))
-            return            
+            return
         }
         
         if device.hasTorch {

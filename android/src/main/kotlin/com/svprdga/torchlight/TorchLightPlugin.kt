@@ -14,6 +14,14 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 
 private const val TAG = "torch_light_plugin"
 
+private const val CHANNEL = "com.svprdga.torchlight/main"
+
+private const val NATIVE_EVENT_ENABLE_TORCH = "enable_torch"
+private const val ERROR_ENABLE_TORCH = "enable_torch_error"
+
+private const val NATIVE_EVENT_DISABLE_TORCH = "disable_torch"
+private const val ERROR_DISABLE_TORCH = "disable_torch_error"
+
 class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
 
     // ****************************************** VARS ***************************************** //
@@ -34,14 +42,14 @@ class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
             Log.d(TAG, "Could not fetch camera id, the plugin won't work.")
         }
 
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "torch_light")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, CHANNEL)
         channel.setMethodCallHandler(this)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: MethodChannel.Result) {
         when (call.method) {
-            "enable_torch" -> enableTorch(result)
-            "disable_torch" -> disableTorch(result)
+            NATIVE_EVENT_ENABLE_TORCH -> enableTorch(result)
+            NATIVE_EVENT_DISABLE_TORCH -> disableTorch(result)
         }
     }
 
@@ -52,16 +60,32 @@ class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
     // ************************************ PRIVATE METHODS ************************************ //
 
     private fun enableTorch(result: MethodChannel.Result) {
-        cameraId?.let {
-            cameraManager.setTorchMode(it, true)
+        if (cameraId != null) {
+            try {
+                cameraManager.setTorchMode(cameraId!!, true)
+                result.success(null)
+            } catch (e: Exception) {
+                result.error(ERROR_ENABLE_TORCH,
+                        "Could not enable torch", null)
+            }
+        } else {
+            result.error(ERROR_ENABLE_TORCH,
+                    "Torch is not available", null)
         }
-        result.success(null)
     }
 
     private fun disableTorch(result: MethodChannel.Result) {
-        cameraId?.let {
-            cameraManager.setTorchMode(it, false)
+        if (cameraId != null) {
+            try {
+                cameraManager.setTorchMode(cameraId!!, false)
+                result.success(null)
+            } catch (e: Exception) {
+                result.error(ERROR_ENABLE_TORCH,
+                        "Could not disable torch", null)
+            }
+        } else {
+            result.error(ERROR_ENABLE_TORCH,
+                    "Torch is not available", null)
         }
-        result.success(null)
     }
 }
