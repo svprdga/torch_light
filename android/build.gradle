@@ -1,4 +1,4 @@
-group 'com.svprdga.torchlight.torch_light'
+group 'com.svprdga.torchlight'
 version '1.0-SNAPSHOT'
 
 buildscript {
