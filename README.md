@@ -17,7 +17,7 @@ Enable and disable the device torch:
 TorchLight.enableTorch();
 
 // Disable torch
-await TorchLight.disableTorch();
+TorchLight.disableTorch();
 ```
 
 This methods can throw an error if the process could not be completed, it is recommended to wrap them like that:
