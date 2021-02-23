@@ -56,16 +56,16 @@ class _TorchAppState extends State<TorchApp> {
   _enableTorch(BuildContext context) async {
     try {
       await TorchLight.enableTorch();
-    } on EnableTorchException catch (e) {
-      _showMessage(e.message);
+    } on Exception catch (_) {
+      _showMessage('Could not enable torch');
     }
   }
 
   _disableTorch(BuildContext context) async {
     try {
       await TorchLight.disableTorch();
-    } on DisableTorchException catch (e) {
-      _showMessage(e.message);
+    } on Exception catch (_) {
+      _showMessage('Could not disable torch');
     }
   }
 

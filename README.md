@@ -2,6 +2,10 @@
 
 A simple Flutter plugin to enable/disable the device torch light.
 
+## Plugin status
+
+This plugin is considered in BETA stage, could potentially contain errors and API might change. Please, use it with caution.
+
 ## Import the library in your Dart code
 
 ```
@@ -26,15 +30,41 @@ This methods can throw an error if the process could not be completed, it is rec
 // Safely enable torch and watch errors
 try {
   await TorchLight.enableTorch();
-} on EnableTorchException catch (e) {
+} on Exception catch (_) {
   // Handle error
 }
 
 // Safely disable torch and watch errors
 try {
   await TorchLight.disableTorch();
-} on DisableTorchException catch (e) {
+} on Exception catch (_) {
   // Handle error
+}
+```
+
+If you want further control over the errors, you can declare explicit exceptions:
+
+```
+// Enable torch and manage all kind of errors
+try {
+  await TorchLight.enableTorch();
+} on EnableTorchExistentUserException catch (e) {
+  // The camera is in use
+} on EnableTorchNotAvailableException catch (e) {
+  // Torch was not detected
+} on EnableTorchException catch (e) {
+  // Torch could not be enabled due to another error
+}
+
+// Disable torch and manage all kind of errors
+try {
+  await TorchLight.disableTorch();
+} on DisableTorchExistentUserException catch (e) {
+  // The camera is in use
+} on DisableTorchNotAvailableException catch (e) {
+  // Torch was not detected
+} on DisableTorchException catch (e) {
+  // Torch could not be disabled due to another error
 }
 ```
 
