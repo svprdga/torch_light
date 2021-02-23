@@ -50,9 +50,9 @@ class TorchLight {
 
   /// Disables the device torch.
   ///
-  /// Throws an [DisableTorchExistentUserException] if the camera is being used by another user.
-  /// Throws an [DisableTorchNotAvailableException] if a torch was not detected.
-  /// Throws an [DisableTorchException] if the process encounters an error.
+  /// Throws a [DisableTorchExistentUserException] if the camera is being used by another user.
+  /// Throws a [DisableTorchNotAvailableException] if a torch was not detected.
+  /// Throws a [DisableTorchException] if the process encounters an error.
   static Future<void> disableTorch() async {
     try {
       await _channel.invokeMethod(NATIVE_EVENT_DISABLE_TORCH);
