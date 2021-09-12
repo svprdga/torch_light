@@ -1,7 +1,7 @@
 part of 'torch_light.dart';
 
 class EnableTorchExistentUserException implements Exception {
-  String message;
+  String? message;
 
   EnableTorchExistentUserException(this.message);
 
@@ -10,7 +10,7 @@ class EnableTorchExistentUserException implements Exception {
 }
 
 class EnableTorchException implements Exception {
-  String message;
+  String? message;
 
   EnableTorchException(this.message);
 
@@ -19,7 +19,7 @@ class EnableTorchException implements Exception {
 }
 
 class EnableTorchNotAvailableException implements Exception {
-  String message;
+  String? message;
 
   EnableTorchNotAvailableException(this.message);
 
@@ -28,7 +28,7 @@ class EnableTorchNotAvailableException implements Exception {
 }
 
 class DisableTorchExistentUserException implements Exception {
-  String message;
+  String? message;
 
   DisableTorchExistentUserException(this.message);
 
@@ -37,7 +37,7 @@ class DisableTorchExistentUserException implements Exception {
 }
 
 class DisableTorchException implements Exception {
-  String message;
+  String? message;
 
   DisableTorchException(this.message);
 
@@ -46,7 +46,7 @@ class DisableTorchException implements Exception {
 }
 
 class DisableTorchNotAvailableException implements Exception {
-  String message;
+  String? message;
 
   DisableTorchNotAvailableException(this.message);
 

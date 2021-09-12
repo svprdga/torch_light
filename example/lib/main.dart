@@ -70,7 +70,7 @@ class _TorchAppState extends State<TorchApp> {
   }
 
   _showMessage(String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
+    _scaffoldKey.currentState!.showSnackBar(SnackBar(
       content: Text(message),
     ));
   }
