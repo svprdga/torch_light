@@ -12,18 +12,19 @@ class TorchApp extends StatefulWidget {
 }
 
 class _TorchAppState extends State<TorchApp> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  GlobalKey<ScaffoldMessengerState> _messangerKey =
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       supportedLocales: [Locale('en', '')],
+      scaffoldMessengerKey: _messangerKey,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       home: Scaffold(
-        key: _scaffoldKey,
         appBar: AppBar(
           title: const Text('torch_light example app'),
         ),
@@ -31,7 +32,7 @@ class _TorchAppState extends State<TorchApp> {
           children: [
             Expanded(
                 child: Center(
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Text('Enable torch'),
                 onPressed: () async {
                   _enableTorch(context);
@@ -40,7 +41,7 @@ class _TorchAppState extends State<TorchApp> {
             )),
             Expanded(
                 child: Center(
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Text('Disable torch'),
                 onPressed: () {
                   _disableTorch(context);
@@ -70,8 +71,6 @@ class _TorchAppState extends State<TorchApp> {
   }
 
   _showMessage(String message) {
-    _scaffoldKey.currentState!.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
+    _messangerKey.currentState?.showSnackBar(SnackBar(content: Text(message)));
   }
 }
