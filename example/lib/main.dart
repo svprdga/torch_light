@@ -12,43 +12,45 @@ class TorchApp extends StatefulWidget {
 }
 
 class _TorchAppState extends State<TorchApp> {
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      supportedLocales: [Locale('en', '')],
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      home: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: const Text('torch_light example app'),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-                child: Center(
-              child: RaisedButton(
-                child: Text('Enable torch'),
-                onPressed: () async {
-                  _enableTorch(context);
-                },
-              ),
-            )),
-            Expanded(
-                child: Center(
-              child: RaisedButton(
-                child: Text('Disable torch'),
-                onPressed: () {
-                  _disableTorch(context);
-                },
-              ),
-            )),
-          ],
-        ),
+    return MaterialApp(supportedLocales: [
+      Locale('en', '')
+    ], localizationsDelegates: [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ], home: TorchController());
+  }
+}
+
+class TorchController extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('torch_light example app'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+              child: Center(
+            child: ElevatedButton(
+              child: Text('Enable torch'),
+              onPressed: () async {
+                _enableTorch(context);
+              },
+            ),
+          )),
+          Expanded(
+              child: Center(
+            child: ElevatedButton(
+              child: Text('Disable torch'),
+              onPressed: () {
+                _disableTorch(context);
+              },
+            ),
+          )),
+        ],
       ),
     );
   }
@@ -57,7 +59,7 @@ class _TorchAppState extends State<TorchApp> {
     try {
       await TorchLight.enableTorch();
     } on Exception catch (_) {
-      _showMessage('Could not enable torch');
+      _showMessage('Could not enable torch', context);
     }
   }
 
@@ -65,13 +67,12 @@ class _TorchAppState extends State<TorchApp> {
     try {
       await TorchLight.disableTorch();
     } on Exception catch (_) {
-      _showMessage('Could not disable torch');
+      _showMessage('Could not disable torch', context);
     }
   }
 
-  _showMessage(String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(message),
-    ));
+  _showMessage(String message, BuildContext context) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 }
