@@ -39,11 +39,11 @@ class TorchLight {
     } on PlatformException catch (e) {
       switch (e.code) {
         case ERROR_ENABLE_TORCH_EXISTENT_USER:
-          throw EnableTorchExistentUserException(e.message);
+          throw EnableTorchExistentUserException(message: e.message);
         case ERROR_ENABLE_TORCH_NOT_AVAILABLE:
-          throw EnableTorchNotAvailableException(e.message);
+          throw EnableTorchNotAvailableException(message: e.message);
         default:
-          throw EnableTorchException(e.message);
+          throw EnableTorchException(message: e.message);
       }
     }
   }
@@ -59,11 +59,11 @@ class TorchLight {
     } on PlatformException catch (e) {
       switch (e.code) {
         case ERROR_DISABLE_TORCH_EXISTENT_USER:
-          throw DisableTorchExistentUserException(e.message);
+          throw DisableTorchExistentUserException(message: e.message);
         case ERROR_DISABLE_TORCH_NOT_AVAILABLE:
-          throw DisableTorchNotAvailableException(e.message);
+          throw DisableTorchNotAvailableException(message: e.message);
         default:
-          throw DisableTorchException(e.message);
+          throw DisableTorchException(message: e.message);
       }
     }
   }

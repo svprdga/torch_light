@@ -3,7 +3,7 @@ part of 'torch_light.dart';
 class EnableTorchExistentUserException implements Exception {
   String? message;
 
-  EnableTorchExistentUserException([this.message]);
+  EnableTorchExistentUserException({this.message});
 
   @override
   String toString() => message != null
@@ -14,7 +14,7 @@ class EnableTorchExistentUserException implements Exception {
 class EnableTorchException implements Exception {
   String? message;
 
-  EnableTorchException([this.message]);
+  EnableTorchException({this.message});
 
   @override
   String toString() => message != null
@@ -25,7 +25,7 @@ class EnableTorchException implements Exception {
 class EnableTorchNotAvailableException implements Exception {
   String? message;
 
-  EnableTorchNotAvailableException([this.message]);
+  EnableTorchNotAvailableException({this.message});
 
   @override
   String toString() => message != null
@@ -36,7 +36,7 @@ class EnableTorchNotAvailableException implements Exception {
 class DisableTorchExistentUserException implements Exception {
   String? message;
 
-  DisableTorchExistentUserException([this.message]);
+  DisableTorchExistentUserException({this.message});
 
   @override
   String toString() => message != null
@@ -47,7 +47,7 @@ class DisableTorchExistentUserException implements Exception {
 class DisableTorchException implements Exception {
   String? message;
 
-  DisableTorchException([this.message]);
+  DisableTorchException({this.message});
 
   @override
   String toString() => message != null
@@ -58,7 +58,7 @@ class DisableTorchException implements Exception {
 class DisableTorchNotAvailableException implements Exception {
   String? message;
 
-  DisableTorchNotAvailableException([this.message]);
+  DisableTorchNotAvailableException({this.message});
 
   @override
   String toString() => message != null
