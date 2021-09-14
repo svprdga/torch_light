@@ -1,5 +1,7 @@
 # torch_light
 
+[![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
+
 A simple Flutter plugin to enable/disable the device torch light.
 
 ## Plugin status
