@@ -1,55 +1,67 @@
 part of 'torch_light.dart';
 
 class EnableTorchExistentUserException implements Exception {
-  String message;
+  String? message;
 
-  EnableTorchExistentUserException(this.message);
+  EnableTorchExistentUserException({this.message});
 
   @override
-  String toString() => "[EnableTorchExistentUserException: $message]";
+  String toString() => message != null
+      ? "[EnableTorchExistentUserException: $message]"
+      : "[EnableTorchExistentUserException]";
 }
 
 class EnableTorchException implements Exception {
-  String message;
+  String? message;
 
-  EnableTorchException(this.message);
+  EnableTorchException({this.message});
 
   @override
-  String toString() => "[EnableTorchException: $message]";
+  String toString() => message != null
+      ? "[EnableTorchException: $message]"
+      : "[EnableTorchException]";
 }
 
 class EnableTorchNotAvailableException implements Exception {
-  String message;
+  String? message;
 
-  EnableTorchNotAvailableException(this.message);
+  EnableTorchNotAvailableException({this.message});
 
   @override
-  String toString() => "[EnableTorchNotAvailableException: $message]";
+  String toString() => message != null
+      ? "[EnableTorchNotAvailableException: $message]"
+      : "[EnableTorchNotAvailableException]";
 }
 
 class DisableTorchExistentUserException implements Exception {
-  String message;
+  String? message;
 
-  DisableTorchExistentUserException(this.message);
+  DisableTorchExistentUserException({this.message});
 
   @override
-  String toString() => "[DisableTorchExistentUserException: $message]";
+  String toString() => message != null
+      ? "[DisableTorchExistentUserException: $message]"
+      : "[DisableTorchExistentUserException]";
 }
 
 class DisableTorchException implements Exception {
-  String message;
+  String? message;
 
-  DisableTorchException(this.message);
+  DisableTorchException({this.message});
 
   @override
-  String toString() => "[DisableTorchException: $message]";
+  String toString() => message != null
+      ? "[DisableTorchException: $message]"
+      : "[DisableTorchException]";
 }
 
 class DisableTorchNotAvailableException implements Exception {
-  String message;
+  String? message;
 
-  DisableTorchNotAvailableException(this.message);
+  DisableTorchNotAvailableException({this.message});
 
   @override
-  String toString() => "[DisableTorchNotAvailableException: $message]";
+  String toString() => message != null
+      ? "[DisableTorchNotAvailableException: $message]"
+      : "[DisableTorchNotAvailableException]";
 }
