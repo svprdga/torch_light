@@ -8,7 +8,7 @@ class EnableTorchExistentUserException implements Exception {
   @override
   String toString() => message != null
       ? "[EnableTorchExistentUserException: $message]"
-      : "[EnableTorchExistentUserException has received a null message]";
+      : "[EnableTorchExistentUserException]";
 }
 
 class EnableTorchException implements Exception {
@@ -19,7 +19,7 @@ class EnableTorchException implements Exception {
   @override
   String toString() => message != null
       ? "[EnableTorchException: $message]"
-      : "[EnableTorchException has received a null message]";
+      : "[EnableTorchException]";
 }
 
 class EnableTorchNotAvailableException implements Exception {
@@ -30,7 +30,7 @@ class EnableTorchNotAvailableException implements Exception {
   @override
   String toString() => message != null
       ? "[EnableTorchNotAvailableException: $message]"
-      : "[EnableTorchNotAvailableException has received a null message]";
+      : "[EnableTorchNotAvailableException]";
 }
 
 class DisableTorchExistentUserException implements Exception {
@@ -41,7 +41,7 @@ class DisableTorchExistentUserException implements Exception {
   @override
   String toString() => message != null
       ? "[DisableTorchExistentUserException: $message]"
-      : "[DisableTorchExistentUserException has received a null message]";
+      : "[DisableTorchExistentUserException]";
 }
 
 class DisableTorchException implements Exception {
@@ -52,7 +52,7 @@ class DisableTorchException implements Exception {
   @override
   String toString() => message != null
       ? "[DisableTorchException: $message]"
-      : "[DisableTorchException has received a null message]";
+      : "[DisableTorchException]";
 }
 
 class DisableTorchNotAvailableException implements Exception {
@@ -63,5 +63,5 @@ class DisableTorchNotAvailableException implements Exception {
   @override
   String toString() => message != null
       ? "[DisableTorchNotAvailableException: $message]"
-      : "[DisableTorchNotAvailableException has received a null message]";
+      : "[DisableTorchNotAvailableException]";
 }

@@ -7,24 +7,21 @@ part 'exceptions.dart';
 class TorchLight {
   // ****************************** CONSTANTS ****************************** //
 
-  static const _CHANNEL_NAME = 'com.svprdga.torchlight/main';
+  static const _channelName = 'com.svprdga.torchlight/main';
 
-  static const NATIVE_EVENT_ENABLE_TORCH = 'enable_torch';
-  static const ERROR_ENABLE_TORCH_EXISTENT_USER =
+  static const _nativeEventEnableTorch = 'enable_torch';
+  static const _errorEnableTorchExistentUser =
       'enable_torch_error_existent_user';
-  static const ERROR_ENABLE_TORCH = 'enable_torch_error';
-  static const ERROR_ENABLE_TORCH_NOT_AVAILABLE = 'enable_torch_not_available';
+  static const _errorEnableTorchNotAvailable = 'enable_torch_not_available';
 
-  static const NATIVE_EVENT_DISABLE_TORCH = 'disable_torch';
-  static const ERROR_DISABLE_TORCH_EXISTENT_USER =
+  static const _nativeEventDisableTorch = 'disable_torch';
+  static const _errorDisableTorchExistentUser =
       'disable_torch_error_existent_user';
-  static const ERROR_DISABLE_TORCH = 'disable_torch_error';
-  static const ERROR_DISABLE_TORCH_NOT_AVAILABLE =
-      'disable_torch_not_available';
+  static const _errorDIsableTorchNotAvailable = 'disable_torch_not_available';
 
   // ********************************* VARS ******************************** //
 
-  static const MethodChannel _channel = const MethodChannel(_CHANNEL_NAME);
+  static const MethodChannel _channel = MethodChannel(_channelName);
 
   //***************************** PUBLIC METHODS *************************** //
 
@@ -35,12 +32,12 @@ class TorchLight {
   /// Throws an [EnableTorchException] if the process encounters an error.
   static Future<void> enableTorch() async {
     try {
-      await _channel.invokeMethod(NATIVE_EVENT_ENABLE_TORCH);
+      await _channel.invokeMethod(_nativeEventEnableTorch);
     } on PlatformException catch (e) {
       switch (e.code) {
-        case ERROR_ENABLE_TORCH_EXISTENT_USER:
+        case _errorEnableTorchExistentUser:
           throw EnableTorchExistentUserException(message: e.message);
-        case ERROR_ENABLE_TORCH_NOT_AVAILABLE:
+        case _errorEnableTorchNotAvailable:
           throw EnableTorchNotAvailableException(message: e.message);
         default:
           throw EnableTorchException(message: e.message);
@@ -55,12 +52,12 @@ class TorchLight {
   /// Throws a [DisableTorchException] if the process encounters an error.
   static Future<void> disableTorch() async {
     try {
-      await _channel.invokeMethod(NATIVE_EVENT_DISABLE_TORCH);
+      await _channel.invokeMethod(_nativeEventDisableTorch);
     } on PlatformException catch (e) {
       switch (e.code) {
-        case ERROR_DISABLE_TORCH_EXISTENT_USER:
+        case _errorDisableTorchExistentUser:
           throw DisableTorchExistentUserException(message: e.message);
-        case ERROR_DISABLE_TORCH_NOT_AVAILABLE:
+        case _errorDIsableTorchNotAvailable:
           throw DisableTorchNotAvailableException(message: e.message);
         default:
           throw DisableTorchException(message: e.message);
