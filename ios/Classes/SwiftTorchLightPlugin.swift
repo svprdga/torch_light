@@ -6,6 +6,9 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
     
     // Constants
     
+    let nativeEventIsTorchAvailable = "torch_available"
+    let errorIsTorchAvailable = "torch_available_error"
+    
     let nativeEventEnableTorch = "enable_torch"
     let errorEnableTorchExistentUser = "enable_torch_error_existent_user"
     let errorEnableTorch = "enable_torch_error"
@@ -26,6 +29,9 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch(call.method) {
+        case self.nativeEventIsTorchAvailable:
+            isTorchAvailable(result: result)
+            return
         case self.nativeEventEnableTorch:
             enableTorch(result: result)
             return
@@ -38,6 +44,15 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
     }
     
     // Private methods
+    
+    private func isTorchAvailable(result: FlutterResult) {
+        guard let device = AVCaptureDevice.default(for: .video) else {
+            result(FlutterError(code: self.errorIsTorchAvailable, message: "Could not determine if the device has a torch, please make sure that you are doing this on a real device.", details: nil))
+            return
+        }
+        
+        result(device.hasTorch)
+    }
     
     private func enableTorch(result: FlutterResult) {
         guard let device = AVCaptureDevice.default(for: .video) else {
