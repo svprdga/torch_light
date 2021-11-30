@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0] - 2021-11-30
+
+### Added
+
+- Method to determine if the device has an available torch.
+
 ## [0.3.0] - 2021-09-14
 
 ### Added

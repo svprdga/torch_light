@@ -2,11 +2,7 @@
 
 [![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 
-A simple Flutter plugin to enable/disable the device torch light.
-
-## Plugin status
-
-This plugin is considered in BETA stage, could potentially contain errors and API might change. Please, use it with caution.
+A simple Flutter plugin to manage the device torch / flash light.
 
 ## Import the library in your Dart code
 
@@ -14,29 +10,27 @@ This plugin is considered in BETA stage, could potentially contain errors and AP
 import 'package:torch_light/torch_light.dart';
 ```
 
+## Check if the device has an available torch
+
+```
+try {
+  final isTorchAvailable = await TorchLight.isTorchAvailable();
+} on Exception catch (_) {
+  // Handle error
+}
+```
+
 ## Enable/disable torch
 
-Enable and disable the device torch:
+Enable and disable the device torch / flash:
 
 ```
-// Enable torch
-TorchLight.enableTorch();
-
-// Disable torch
-TorchLight.disableTorch();
-```
-
-This methods can throw an error if the process could not be completed, it is recommended to wrap them like that:
-
-```
-// Safely enable torch and watch errors
 try {
   await TorchLight.enableTorch();
 } on Exception catch (_) {
   // Handle error
 }
 
-// Safely disable torch and watch errors
 try {
   await TorchLight.disableTorch();
 } on Exception catch (_) {
