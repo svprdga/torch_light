@@ -9,6 +9,8 @@ class TorchLight {
 
   static const _channelName = 'com.svprdga.torchlight/main';
 
+  static const _nativeEventIsTorchAvailable = 'torch_available';
+
   static const _nativeEventEnableTorch = 'enable_torch';
   static const _errorEnableTorchExistentUser =
       'enable_torch_error_existent_user';
@@ -24,6 +26,17 @@ class TorchLight {
   static const MethodChannel _channel = MethodChannel(_channelName);
 
   //***************************** PUBLIC METHODS *************************** //
+
+  /// Returns true if the device has a torch available, false otherwise.
+  ///
+  /// Throws an [EnableTorchException] if the process encounters an error.
+  static Future<bool> isTorchAvailable() async {
+    try {
+      return await _channel.invokeMethod(_nativeEventIsTorchAvailable) as bool;
+    } on PlatformException catch (e) {
+      throw EnableTorchException(message: e.message);
+    }
+  }
 
   /// Enables the device torch.
   ///
