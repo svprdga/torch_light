@@ -1,4 +1,4 @@
-package com.svprdga.torchlight.torch_light_example
+package com.svprdga.torchlight.example
 
 import io.flutter.embedding.android.FlutterActivity
 
