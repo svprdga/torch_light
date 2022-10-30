@@ -31,7 +31,7 @@ private const val ERROR_DISABLE_TORCH = "disable_torch_error"
 private const val ERROR_DISABLE_TORCH_NOT_AVAILABLE = "disable_torch_not_available"
 
 class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
-// ****************************************** VARS ***************************************** //
+    // ****************************************** VARS ***************************************** //
 
     private lateinit var context: Context
     private lateinit var channel: MethodChannel
