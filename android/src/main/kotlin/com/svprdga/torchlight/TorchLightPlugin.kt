@@ -13,7 +13,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
 
 private const val TAG = "torch_light_plugin"
 
@@ -32,7 +31,6 @@ private const val ERROR_DISABLE_TORCH = "disable_torch_error"
 private const val ERROR_DISABLE_TORCH_NOT_AVAILABLE = "disable_torch_not_available"
 
 class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
-
     // ****************************************** VARS ***************************************** //
 
     private lateinit var context: Context
