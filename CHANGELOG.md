@@ -5,6 +5,7 @@
 ### Changed
 
 - Update internal dependencies.
+- Set minimum Android SDK level to Android 6.0 (API level 23)
 
 ## [0.4.0] - 2021-11-30
 
