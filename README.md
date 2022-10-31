@@ -2,7 +2,7 @@
 
 [![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 
-A simple Flutter plugin to manage the device torch / flash light.
+A simple Flutter plugin to manage the device torch / flashlight.
 
 ## Import the library in your Dart code
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0] - 2022-10-31
+
+### Changed
+
+- Update internal dependencies.
+- Set minimum Android SDK level to Android 6.0 (API level 23)
+
 ## [0.4.0] - 2021-11-30
 
 ### Added
