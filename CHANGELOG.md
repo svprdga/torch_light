@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0] - 2022-10-31
+
+### Changed
+
+- Update internal dependencies.
+
 ## [0.4.0] - 2021-11-30
 
 ### Added
