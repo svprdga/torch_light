@@ -21,6 +21,8 @@ class TorchLight {
       'disable_torch_error_existent_user';
   static const _errorDIsableTorchNotAvailable = 'disable_torch_not_available';
 
+  static const _nativeEventStrengthMaximumLevel = 'strength_maximum_level';
+
   // ********************************* VARS ******************************** //
 
   static const MethodChannel _channel = MethodChannel(_channelName);
@@ -75,6 +77,31 @@ class TorchLight {
         default:
           throw DisableTorchException(message: e.message);
       }
+    }
+  }
+
+  /// Checks the maximum strength level of the torch.
+  /// <br/><br/>
+  /// On Android, this method returns a double value that must be interpreted in the following way:
+  ///
+  /// - A value equal to 0.0 indicates that the device doesn't have a torch.
+  /// - A value equal than 1.0 indicates that the device has a torch but its strength can't be configured.
+  /// - A value greater than 1.0 indicates the maximum strength level of the device torch. This value comes as a double but won't never have decimal units.
+  ///
+  /// On iOS, this method returns a double value that must be interpreted in the following way:
+  ///
+  /// - A value equal to 0.0 indicates that the device doesn't have a torch.
+  /// - A value different than 0.0 indicates the current maximum strenght level of the torch. This value will never be greater than 1.0.
+  ///
+  static Future<double> getStrengthMaximumLevel() async {
+    try {
+      final result = await _channel
+          .invokeMethod(_nativeEventStrengthMaximumLevel) as double;
+      return result;
+    } on PlatformException catch (_) {
+      throw CheckTorchStrengthException(
+        message: 'Could not retrieve torch strength.',
+      );
     }
   }
 }

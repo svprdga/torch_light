@@ -58,6 +58,16 @@ class TorchController extends StatelessWidget {
                     ),
                   ),
                 ),
+                Expanded(
+                  child: Center(
+                    child: ElevatedButton(
+                      child: const Text('Get strength level'),
+                      onPressed: () {
+                        _getStrengthMaximumLevel(context);
+                      },
+                    ),
+                  ),
+                ),
               ],
             );
           } else if (snapshot.hasData) {
@@ -100,6 +110,20 @@ class TorchController extends StatelessWidget {
     } on Exception catch (_) {
       _showMessage('Could not disable torch', context);
     }
+  }
+
+  Future<void> _getStrengthMaximumLevel(BuildContext context) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    late final String message;
+
+    try {
+      final result = await TorchLight.getStrengthMaximumLevel();
+      message = 'Maximum strength level: $result';
+    } on Exception catch (_) {
+      message = 'Could not get maximum strength level';
+    }
+
+    scaffoldMessenger.showSnackBar(SnackBar(content: Text(message)));
   }
 
   void _showMessage(String message, BuildContext context) {

@@ -65,3 +65,14 @@ class DisableTorchNotAvailableException implements Exception {
       ? "[DisableTorchNotAvailableException: $message]"
       : "[DisableTorchNotAvailableException]";
 }
+
+class CheckTorchStrengthException implements Exception {
+  String? message;
+
+  CheckTorchStrengthException({this.message});
+
+  @override
+  String toString() => message != null
+      ? "[CheckTorchStrengthException: $message]"
+      : "[CheckTorchStrengthException]";
+}
