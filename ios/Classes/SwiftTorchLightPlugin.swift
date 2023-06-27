@@ -22,6 +22,12 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
     let nativeEventStrengthMaximumLevel = "strength_maximum_level"
     let errorStrengthMaximumLevel = "error_strength_maximum_level"
     
+    let nativeEventEnableTorchWithStrengthLevel = "enable_torch_with_strength_level"
+    let errorEnableTorchWithStrengthLevelExistentUser = "enable_torch_with_strength_level_existent_user"
+    let errorEnableTorchWithStrengthLevelNotAvailable = "enable_torch_with_strength_level_not_available"
+    let errorEnableTorchWithStrengthLevelInvalidValue = "enable_torch_with_strength_level_invalid_value"
+    let errorEnableTorchWithStrengthLevel = "enable_torch_with_strength_level_error"
+    
     // Public methods
     
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -43,6 +49,11 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
             return
         case self.nativeEventStrengthMaximumLevel:
             getStrengthMaximumLevel(result: result)
+            return
+        case self.nativeEventEnableTorchWithStrengthLevel:
+            let args = call.arguments as! [Any]
+            let level = Float(args[0] as! Double)
+            enableTorchWithStrengthLevel(level: level, result: result)
             return
         default:
             result(FlutterMethodNotImplemented)
@@ -109,9 +120,41 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
         }
         
         if device.hasTorch {
-            result(AVCaptureDevice.maxAvailableTorchLevel)
+            result(1.0)
         } else {
             result(0.0)
+        }
+    }
+    
+    private func enableTorchWithStrengthLevel(level: Float, result: FlutterResult) {
+        guard let device = AVCaptureDevice.default(for: .video) else {
+            result(FlutterError(code: self.errorEnableTorchWithStrengthLevel, message: "Could not enable the torch with strength level, please make sure that you are doing this on a real device.", details: nil))
+            return
+        }
+        
+        // Check if the device as a built-in torch
+        if !device.hasTorch {
+            result(FlutterError(code: self.errorEnableTorchWithStrengthLevelNotAvailable, message: "Torch is not available.", details: nil))
+            return
+        }
+        
+        // Check that level is in range
+        if level < 0.0 {
+            result(FlutterError(code: self.errorEnableTorchWithStrengthLevelInvalidValue, message: "On IOS, the strength value of the torch should be between 0.0 and 1.0.", details: nil))
+            return
+        }
+        
+        var setLevel = level
+        if setLevel >= 1.0 {
+            setLevel = AVCaptureDevice.maxAvailableTorchLevel
+        }
+        
+        do {
+            try device.lockForConfiguration()
+            try device.setTorchModeOn(level: setLevel)
+            device.unlockForConfiguration()
+        } catch {
+            result(FlutterError(code: self.errorEnableTorchWithStrengthLevel, message: "Error when turning on torch with strength value.", details: nil))
         }
     }
 }

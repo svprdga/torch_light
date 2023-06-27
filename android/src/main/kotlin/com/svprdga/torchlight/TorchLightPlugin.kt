@@ -183,7 +183,7 @@ class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
 
         if (!isTorchAvailable) {
             result.error(
-                ERROR_ENABLE_TORCH_NOT_AVAILABLE,
+                ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL_NOT_AVAILABLE,
                 "Torch is not available", null
             )
             return

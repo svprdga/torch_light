@@ -102,7 +102,7 @@ class TorchLight {
   /// On iOS, this method returns a double value that must be interpreted in the following way:
   ///
   /// - A value equal to 0.0 indicates that the device doesn't have a torch.
-  /// - A value different than 0.0 indicates the current maximum strenght level of the torch.
+  /// - If the device has a torch, then this method will always return a 1.0 value.
   ///
   /// Throws a [CheckTorchStrengthException] if the torch strength could not be retrieved.
   static Future<double> getStrengthMaximumLevel() async {
@@ -119,7 +119,10 @@ class TorchLight {
 
   /// Enables the torch with the provided [value] as its strength level.
   /// <br/><br/>
-  /// Before calling this method, the caller should know the maximum strength level of the built-in torch. You can check this value by calling the [getStrengthMaximumLevel()] method. <br/>
+  /// On Android, before calling this method, the caller should know the maximum strength level of the built-in torch. You can check this value by calling the [getStrengthMaximumLevel()] method.
+  /// <br/><br/>
+  /// On iOS, the strength level of the torch will always be between 0.0 and 1.0. If the level provided is 1.0 or beyond the torch will be turned on with its maximum admitted level.
+  /// <br/><br/>
   /// If the device doesn't support setting the strength level of the torch, then the torch will be turned on with its default strength value.
   /// <br/><br/>
   /// Throws an [EnableTorchWithStrengthLevelExistentUserException] if the camera is being used by another user.<br/>

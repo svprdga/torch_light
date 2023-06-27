@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:torch_light/torch_light.dart';
@@ -35,7 +36,9 @@ class _AdvancedTabState extends State<AdvancedTab> {
           return const Center(
             child: Text('No torch available.'),
           );
-        } else if (snapshot.hasData && snapshot.data == 1.0) {
+        } else if (snapshot.hasData &&
+            snapshot.data == 1.0 &&
+            Platform.isAndroid) {
           return const Center(
             child: Text("This torch doesn't allow to set a strength level."),
           );
@@ -46,6 +49,11 @@ class _AdvancedTabState extends State<AdvancedTab> {
                 padding:
                     const EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                 child: Text('Max torch level: ${snapshot.data}'),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
+                child: Text('Current level: $_value'),
               ),
               Expanded(
                 child: Slider(
@@ -114,6 +122,9 @@ class _AdvancedTabState extends State<AdvancedTab> {
 
     try {
       await TorchLight.disableTorch();
+      setState(() {
+        _value = 0.0;
+      });
     } on Exception catch (_) {
       scaffoldMessenger.showSnackBar(
         const SnackBar(
