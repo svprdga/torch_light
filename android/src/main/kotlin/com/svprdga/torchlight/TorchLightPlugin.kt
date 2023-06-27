@@ -16,6 +16,8 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import java.lang.IllegalArgumentException
+import kotlin.math.roundToInt
 
 private const val TAG = "torch_light_plugin"
 
@@ -35,9 +37,14 @@ private const val ERROR_DISABLE_TORCH_NOT_AVAILABLE = "disable_torch_not_availab
 
 private const val NATIVE_EVENT_STRENGTH_MAXIMUM_LEVEL = "strength_maximum_level"
 
-//private const val NATIVE_EVENT_ENABLE_TORCH_WITH_STRENGTH_LEVEL = "enable_torch_with_strength_level"
-//private const val ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL_NOT_AVAILABLE = "enable_torch_with_strength_level_not_available"
-//private const val ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL_INVALID_VALUE = "enable_torch_with_strength_level_invalid_value"
+private const val NATIVE_EVENT_ENABLE_TORCH_WITH_STRENGTH_LEVEL = "enable_torch_with_strength_level"
+private const val ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL_EXISTENT_USER =
+    "enable_torch_with_strength_level_existent_user"
+private const val ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL = "enable_torch_with_strength_level_error"
+private const val ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL_NOT_AVAILABLE =
+    "enable_torch_with_strength_level_not_available"
+private const val ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL_INVALID_VALUE =
+    "enable_torch_with_strength_level_invalid_value"
 
 class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
     // ****************************************** VARS ***************************************** //
@@ -70,6 +77,13 @@ class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
             NATIVE_EVENT_ENABLE_TORCH -> enableTorch(result)
             NATIVE_EVENT_DISABLE_TORCH -> disableTorch(result)
             NATIVE_EVENT_STRENGTH_MAXIMUM_LEVEL -> getStrengthMaximumLevel(result)
+            NATIVE_EVENT_ENABLE_TORCH_WITH_STRENGTH_LEVEL -> {
+                val args = call.arguments as List<Any>
+                val level = args[0] as Double
+                enableTorchWithStrengthLevel(level, result)
+            }
+
+            else -> result.notImplemented()
         }
     }
 
@@ -136,9 +150,11 @@ class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && cameraId != null) {
             val characteristics = cameraManager.getCameraCharacteristics(cameraId!!)
-            maxStrengthLevel = characteristics.get(CameraCharacteristics.FLASH_INFO_STRENGTH_MAXIMUM_LEVEL)
+            maxStrengthLevel =
+                characteristics.get(CameraCharacteristics.FLASH_INFO_STRENGTH_MAXIMUM_LEVEL)
         } else {
-            val isTorchAvailable = context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)
+            val isTorchAvailable =
+                context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)
 
             if (isTorchAvailable) {
                 maxStrengthLevel = 1
@@ -149,12 +165,66 @@ class TorchLightPlugin : FlutterPlugin, MethodCallHandler {
             null -> {
                 result.success(0.0)
             }
+
             1 -> {
                 result.success(1.0)
             }
+
             else -> {
                 result.success(maxStrengthLevel.toDouble())
             }
         }
+    }
+
+    private fun enableTorchWithStrengthLevel(level: Double, result: MethodChannel.Result) {
+        // Check if the device has a built-in torch
+        val isTorchAvailable =
+            context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)
+
+        if (!isTorchAvailable) {
+            result.error(
+                ERROR_ENABLE_TORCH_NOT_AVAILABLE,
+                "Torch is not available", null
+            )
+            return
+        }
+
+        // Check that we have a valid camera ID to work with
+        if (cameraId == null) {
+            result.error(
+                ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL_NOT_AVAILABLE,
+                "Could not enable torch with strength level", null
+            )
+        }
+
+        // Try to turn on torch with the provided level
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                cameraManager.turnOnTorchWithStrengthLevel(cameraId!!, level.roundToInt())
+            } else {
+                cameraManager.setTorchMode(cameraId!!, true)
+            }
+
+            result.success(null)
+        } catch (e: CameraAccessException) {
+            result.error(
+                ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL_EXISTENT_USER,
+                "There is an existent camera user, cannot enable torch with strenght level: $e",
+                null
+            )
+        } catch (e: IllegalArgumentException) {
+            result.error(
+                ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL_INVALID_VALUE,
+                "Invalid strength level provided to turn on torch with strength level: $e",
+                null
+            )
+        } catch (e: Exception) {
+            result.error(
+                ERROR_ENABLE_TORCH_WITH_STRENGTH_LEVEL,
+                "Could not enable torch with strength level: $e",
+                null
+            )
+        }
+
     }
 }

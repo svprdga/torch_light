@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:torch_light/torch_light.dart';
+import 'package:torch_light_example/advanced.dart';
+import 'package:torch_light_example/simple.dart';
 
 void main() {
   runApp(TorchApp());
@@ -20,114 +21,49 @@ class _TorchAppState extends State<TorchApp> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      home: TorchController(),
+      home: MainScreen(),
     );
   }
 }
 
-class TorchController extends StatelessWidget {
+class MainScreen extends StatefulWidget {
+  @override
+  _MainScreenState createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int _currentIndex = 0;
+
+  final List<Widget> _tabs = [
+    SimpleTab(),
+    AdvancedTab(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('torch_light example app'),
+        title: const Text('TorchLight sample'),
       ),
-      body: FutureBuilder<bool>(
-        future: _isTorchAvailable(context),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData && snapshot.data!) {
-            return Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: ElevatedButton(
-                      child: const Text('Enable torch'),
-                      onPressed: () async {
-                        _enableTorch(context);
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: ElevatedButton(
-                      child: const Text('Disable torch'),
-                      onPressed: () {
-                        _disableTorch(context);
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: ElevatedButton(
-                      child: const Text('Get strength level'),
-                      onPressed: () {
-                        _getStrengthMaximumLevel(context);
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            );
-          } else if (snapshot.hasData) {
-            return const Center(
-              child: Text('No torch available.'),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      body: _tabs[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
         },
+        items: const [
+          BottomNavigationBarItem(
+            label: 'Simple',
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: 'Advanced',
+            icon: Icon(Icons.settings),
+          ),
+        ],
       ),
     );
-  }
-
-  Future<bool> _isTorchAvailable(BuildContext context) async {
-    try {
-      return await TorchLight.isTorchAvailable();
-    } on Exception catch (_) {
-      _showMessage(
-        'Could not check if the device has an available torch',
-        context,
-      );
-      rethrow;
-    }
-  }
-
-  Future<void> _enableTorch(BuildContext context) async {
-    try {
-      await TorchLight.enableTorch();
-    } on Exception catch (_) {
-      _showMessage('Could not enable torch', context);
-    }
-  }
-
-  Future<void> _disableTorch(BuildContext context) async {
-    try {
-      await TorchLight.disableTorch();
-    } on Exception catch (_) {
-      _showMessage('Could not disable torch', context);
-    }
-  }
-
-  Future<void> _getStrengthMaximumLevel(BuildContext context) async {
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    late final String message;
-
-    try {
-      final result = await TorchLight.getStrengthMaximumLevel();
-      message = 'Maximum strength level: $result';
-    } on Exception catch (_) {
-      message = 'Could not get maximum strength level';
-    }
-
-    scaffoldMessenger.showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  void _showMessage(String message, BuildContext context) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
   }
 }

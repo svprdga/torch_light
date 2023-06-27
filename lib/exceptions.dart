@@ -76,3 +76,47 @@ class CheckTorchStrengthException implements Exception {
       ? "[CheckTorchStrengthException: $message]"
       : "[CheckTorchStrengthException]";
 }
+
+class EnableTorchWithStrengthLevelException implements Exception {
+  String? message;
+
+  EnableTorchWithStrengthLevelException({this.message});
+
+  @override
+  String toString() => message != null
+      ? "[EnableTorchWithStrengthLevelException: $message]"
+      : "[EnableTorchWithStrengthLevelException]";
+}
+
+class EnableTorchWithStrengthLevelExistentUserException implements Exception {
+  String? message;
+
+  EnableTorchWithStrengthLevelExistentUserException({this.message});
+
+  @override
+  String toString() => message != null
+      ? "[EnableTorchWithStrengthLevelExistentUserException: $message]"
+      : "[EnableTorchWithStrengthLevelExistentUserException]";
+}
+
+class EnableTorchWithStrengthLevelNotAvailableException implements Exception {
+  String? message;
+
+  EnableTorchWithStrengthLevelNotAvailableException({this.message});
+
+  @override
+  String toString() => message != null
+      ? "[EnableTorchWithStrengthLevelNotAvailableException: $message]"
+      : "[EnableTorchWithStrengthLevelNotAvailableException]";
+}
+
+class EnableTorchWithStrengthLevelInvalidValueException implements Exception {
+  String? message;
+
+  EnableTorchWithStrengthLevelInvalidValueException({this.message});
+
+  @override
+  String toString() => message != null
+      ? "[EnableTorchWithStrengthLevelInvalidValueException: $message]"
+      : "[EnableTorchWithStrengthLevelInvalidValueException]";
+}
