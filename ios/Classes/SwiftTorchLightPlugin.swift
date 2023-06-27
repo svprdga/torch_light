@@ -19,6 +19,9 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
     let errorDisableTorch = "disable_torch_error"
     let errorDisableTorchNotAvailable = "disable_torch_not_available"
     
+    let nativeEventStrengthMaximumLevel = "strength_maximum_level"
+    let errorStrengthMaximumLevel = "error_strength_maximum_level"
+    
     // Public methods
     
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -37,6 +40,9 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
             return
         case self.nativeEventDisableTorch:
             disableTorch(result: result)
+            return
+        case self.nativeEventStrengthMaximumLevel:
+            getStrengthMaximumLevel(result: result)
             return
         default:
             result(FlutterMethodNotImplemented)
@@ -93,6 +99,19 @@ public class SwiftTorchLightPlugin: NSObject, FlutterPlugin {
             result(nil)
         } else {
             result(FlutterError(code: self.errorDisableTorchNotAvailable, message: "Torch is not available", details: nil))
+        }
+    }
+    
+    private func getStrengthMaximumLevel(result: FlutterResult) {
+        guard let device = AVCaptureDevice.default(for: .video) else {
+            result(FlutterError(code: self.errorStrengthMaximumLevel, message: "Could not determine the strength level of the torch, please make sure that you are doing this on a real device.", details: nil))
+            return
+        }
+        
+        if device.hasTorch {
+            result(AVCaptureDevice.maxAvailableTorchLevel)
+        } else {
+            result(0.0)
         }
     }
 }

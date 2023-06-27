@@ -30,7 +30,9 @@ class TorchLight {
   //***************************** PUBLIC METHODS *************************** //
 
   /// Returns true if the device has a torch available, false otherwise.
-  ///
+  /// <br/><br/>
+  /// You can also call the [getStrengthMaximumLevel] method to get the maximum torch strenght level, besides knowing if the device has an available torch.
+  /// <br/><br/>
   /// Throws an [EnableTorchException] if the process encounters an error.
   static Future<bool> isTorchAvailable() async {
     try {
@@ -41,7 +43,7 @@ class TorchLight {
   }
 
   /// Enables the device torch.
-  ///
+  /// <br/><br/>
   /// Throws an [EnableTorchExistentUserException] if the camera is being used by another user.
   /// Throws an [EnableTorchNotAvailableException] if a torch was not detected.
   /// Throws an [EnableTorchException] if the process encounters an error.
@@ -61,7 +63,7 @@ class TorchLight {
   }
 
   /// Disables the device torch.
-  ///
+  /// <br/><br/>
   /// Throws a [DisableTorchExistentUserException] if the camera is being used by another user.
   /// Throws a [DisableTorchNotAvailableException] if a torch was not detected.
   /// Throws a [DisableTorchException] if the process encounters an error.
@@ -91,8 +93,9 @@ class TorchLight {
   /// On iOS, this method returns a double value that must be interpreted in the following way:
   ///
   /// - A value equal to 0.0 indicates that the device doesn't have a torch.
-  /// - A value different than 0.0 indicates the current maximum strenght level of the torch. This value will never be greater than 1.0.
+  /// - A value different than 0.0 indicates the current maximum strenght level of the torch.
   ///
+  /// Throws a [CheckTorchStrengthException] if the torch strength could not be retrieved.
   static Future<double> getStrengthMaximumLevel() async {
     try {
       final result = await _channel
