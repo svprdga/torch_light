@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0] - 2024-06-29
+
+### Added
+
+- Update Gradle project to adapt it to the latest version
+- Improved plugin documentation
+- Updated example project 
+
 ## [1.0.0] - 2022-10-31
 
 ### Changed
