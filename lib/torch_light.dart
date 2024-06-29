@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 
 part 'exceptions.dart';
 
+/// This is the main class of the plugin from which it is possible to check
+/// whether the device has a torch or not, and to turn it on and off.
 class TorchLight {
   // ****************************** CONSTANTS ****************************** //
 
@@ -29,7 +31,7 @@ class TorchLight {
 
   /// Returns true if the device has a torch available, false otherwise.
   ///
-  /// Throws an [EnableTorchException] if the process encounters an error.
+  /// - Throws an [EnableTorchException] if the process encounters an error.
   static Future<bool> isTorchAvailable() async {
     try {
       return await _channel.invokeMethod(_nativeEventIsTorchAvailable) as bool;
@@ -40,9 +42,10 @@ class TorchLight {
 
   /// Enables the device torch.
   ///
-  /// Throws an [EnableTorchExistentUserException] if the camera is being used by another user.
-  /// Throws an [EnableTorchNotAvailableException] if a torch was not detected.
-  /// Throws an [EnableTorchException] if the process encounters an error.
+  /// - Throws an [EnableTorchExistentUserException] if the camera is being used
+  /// by another process.
+  /// - Throws an [EnableTorchNotAvailableException] if a torch was not detected.
+  /// - Throws an [EnableTorchException] if the process encounters an error.
   static Future<void> enableTorch() async {
     try {
       await _channel.invokeMethod(_nativeEventEnableTorch);
@@ -60,9 +63,10 @@ class TorchLight {
 
   /// Disables the device torch.
   ///
-  /// Throws a [DisableTorchExistentUserException] if the camera is being used by another user.
-  /// Throws a [DisableTorchNotAvailableException] if a torch was not detected.
-  /// Throws a [DisableTorchException] if the process encounters an error.
+  /// - Throws a [DisableTorchExistentUserException] if the camera is being used
+  /// by another process.
+  /// - Throws a [DisableTorchNotAvailableException] if a torch was not detected.
+  /// - Throws a [DisableTorchException] if the process encounters an error.
   static Future<void> disableTorch() async {
     try {
       await _channel.invokeMethod(_nativeEventDisableTorch);

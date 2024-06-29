@@ -75,35 +75,45 @@ class TorchController extends StatelessWidget {
   }
 
   Future<bool> _isTorchAvailable(BuildContext context) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     try {
       return await TorchLight.isTorchAvailable();
     } on Exception catch (_) {
-      _showMessage(
-        'Could not check if the device has an available torch',
-        context,
+      scaffoldMessenger.showSnackBar(
+        const SnackBar(
+          content: Text('Could not check if the device has an available torch'),
+        ),
       );
       rethrow;
     }
   }
 
   Future<void> _enableTorch(BuildContext context) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     try {
       await TorchLight.enableTorch();
     } on Exception catch (_) {
-      _showMessage('Could not enable torch', context);
+      scaffoldMessenger.showSnackBar(
+        const SnackBar(
+          content: Text('Could not enable torch'),
+        ),
+      );
     }
   }
 
   Future<void> _disableTorch(BuildContext context) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     try {
       await TorchLight.disableTorch();
     } on Exception catch (_) {
-      _showMessage('Could not disable torch', context);
+      scaffoldMessenger.showSnackBar(
+        const SnackBar(
+          content: Text('Could not disable torch'),
+        ),
+      );
     }
-  }
-
-  void _showMessage(String message, BuildContext context) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
   }
 }
