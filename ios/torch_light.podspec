@@ -5,17 +5,18 @@
 Pod::Spec.new do |s|
   s.name             = 'torch_light'
   s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.summary          = 'A Flutter plugin to check if the device has a torch and to turn it on and off.'
   s.description      = <<-DESC
-A new flutter plugin project.
+torch_light is a Flutter plugin that lets you check whether the device has a torch (flashlight)
+and turn it on or off via AVFoundation on iOS.
                        DESC
-  s.homepage         = 'http://example.com'
-  s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
-  s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.homepage         = 'https://davidserrano.io/'
+  s.license          = { :type => 'Apache-2.0', :file => '../LICENSE' }
+  s.author           = { 'David Serrano Canales' => 'contact@davidserrano.io' }
+  s.source           = { :git => 'https://github.com/svprdga/torch_light.git', :tag => s.version.to_s }
+  s.source_files = 'torch_light/Sources/torch_light/**/*.swift'
   s.dependency 'Flutter'
-  s.platform = :ios, '8.0'
+  s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

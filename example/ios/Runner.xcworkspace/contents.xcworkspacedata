@@ -7,4 +7,7 @@
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "absolute:/Users/svprdga/code/personal/flutter/torch_light/ios/torch_light">
+   </FileRef>
 </Workspace>
