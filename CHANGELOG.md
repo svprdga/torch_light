@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0] - 2026-05-27
+
+### Added
+
+- Migrate to built-in Kotlin
+- Migrate to Swift Package Manager
+
+### Changed
+
+- Updates minimum supported SDK version to Flutter 3.44 and Dart 3.12
+
 ## [1.1.0] - 2024-06-29
 
 ### Added

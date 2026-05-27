@@ -42,7 +42,7 @@ class TorchController extends StatelessWidget {
                   child: Center(
                     child: ElevatedButton(
                       child: const Text('Enable torch'),
-                      onPressed: () async {
+                      onPressed: () {
                         _enableTorch(context);
                       },
                     ),
