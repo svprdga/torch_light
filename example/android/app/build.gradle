@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "com.svprdga.torchlight.example"
-        minSdk 23
+        minSdkVersion flutter.minSdkVersion
         targetSdk 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -6,19 +6,19 @@ environment:
   sdk: ">=2.17.5 <3.0.0"
 
 dependencies:
-  cupertino_icons: 1.0.8
+  cupertino_icons: ^1.0.9
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: 0.19.0
+  intl: ^0.20.2
   torch_light:
     path: ../
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lint: 2.3.0
+  lint: ^2.8.0
 
 flutter:
   uses-material-design: true
