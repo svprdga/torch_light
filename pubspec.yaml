@@ -1,6 +1,6 @@
 name: torch_light
 description: A Flutter plugin to check if the device has a torch / flashlight, and to turn it on and off.
-version: 2.0.0
+version: 2.0.1
 homepage: https://davidserrano.io/
 repository: https://github.com/svprdga/torch_light
 
@@ -15,7 +15,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lint: 2.8.0
+  flutter_lints: ^6.0.0
 
 flutter:
   plugin:

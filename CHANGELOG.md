@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.0.1] - 2026-09-11
+
+### Changed
+
+- Upgrade development linting to official `flutter_lints: ^6.0.0`
+- Upgrade Android toolchain to Gradle 9.3.1, AGP 9.1.0, Kotlin 2.4.0, and NDK 28
+- Fix Android Gradle build failure by disabling obsolete Jetifier and bumping JVM heap
+
+### Added
+
+- Comprehensive unit test suite for MethodChannel calls and exception handling
+- Example app widget tests covering torch available and unavailable states
+
+### Fixed
+
+- Example app SDK constraint (`sdk: ^3.12.0`) and version metadata
+- Example app widget constructor keys and const correctness
+- Example app UI with caution status card when torch hardware is unavailable and retry support
+
+
 ## [2.0.0] - 2026-05-27
 
 ### Added
