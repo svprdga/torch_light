@@ -3,12 +3,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:torch_light/torch_light.dart';
 
 void main() {
-  runApp(TorchApp());
+  runApp(const TorchApp());
 }
 
 class TorchApp extends StatefulWidget {
+  const TorchApp({super.key});
+
   @override
-  _TorchAppState createState() => _TorchAppState();
+  State<TorchApp> createState() => _TorchAppState();
 }
 
 class _TorchAppState extends State<TorchApp> {
@@ -20,12 +22,13 @@ class _TorchAppState extends State<TorchApp> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      home: TorchController(),
+      home: const TorchController(),
     );
   }
 }
 
 class TorchController extends StatelessWidget {
+  const TorchController({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
